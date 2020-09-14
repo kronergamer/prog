@@ -1,0 +1,8 @@
+flask
+flask-sqlachemy
+flask-login
+flask-wtf
+flask-mail
+flask-migrate
+flask-sijax
+flask_uploads

@@ -1,0 +1,18 @@
+{%macro listar_jogos(jogos) %}
+{%for jogo in jogos%}
+<div>
+  <form action="/carrinho">
+    <a href="/jogo"><img src="{{url_for ('static', filename = jogo.caminho_foto)}}" style="width: 240px;height: 172px;float: left;"></a>
+    <a href="/jogo"> 
+      <div id="descricao">
+        {{form.escondido}}
+        <h3>&nbsp;&nbsp;{{jogo.titulo}}</h3>
+        <h5>&nbsp;&nbsp;{{jogo.genero}}</h5>
+        <input type="submit" value=jogo.preco_atual name="jogo_comprado">
+      </div>
+    </a>
+  </form>
+</div>
+<br>
+{% endfor %}
+{% endmacro %}

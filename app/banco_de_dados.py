@@ -1,0 +1,109 @@
+from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from random import randint , choice 
+
+
+class Modelo_user(db.Model,UserMixin):
+    usuario = db.Column(db.String(15),unique=True , nullable=False)
+    cpf= db.Column(db.String(15),primary_key=True)    
+    cidade = db.Column(db.String(15))
+    estado = db.Column(db.String(15))
+    cep = db.Column(db.String(15))  
+    rua = db.Column(db.String(45))
+    numero_imovel = db.Column(db.String(15))
+    data_de_nacimento = db.Column(db.String(15),nullable=False)    
+    email = db.Column(db.String(120), unique=True, nullable=False) 
+    senha =db.Column(db.String(15),unique=True , nullable=False)
+    sexo = db.Column(db.String(2), unique=False, nullable=False)
+    historico = db.Column(db.Text())
+    caminho_foto = db.Column(db.String, nullable=True)
+    is_administrador = db.Column(db.Boolean())
+    preferencia = db.Column(db.Boolean())
+
+    def get_id(self):
+        return self.cpf
+    def set_historico(self,prato):
+        if prato is not None:
+            self.historico +="/"+prato[0]
+        else:
+            self.historico = " "
+  
+    def set_senha(self, password):
+        self.senha = generate_password_hash(password)
+
+
+    def check_senha(self, password):
+        return check_password_hash(self.senha, password)
+
+    def __repr__(self):
+        return 'Usuario com cpf {}'.format(self.usuario) 
+
+    def set_administrador(self,valor): 
+        self.is_administrador = valor
+    def set_cpf(self,cpf):
+        lista_cpfs=[]
+        usuarios = Modelo_user.query.all()
+        for usuario in usuarios:
+            lista_cpfs.append(usuario[1])
+        if cpf in lista_cpfs:
+            self.cpf= None
+        self.cpf = cpf 
+    def set_email(self,email):
+        lista_emails=[]
+        usuarios = Modelo_user.query.all()
+        for usuario in usuarios:
+            lista_emails.append(usuario[8])
+        if email in lista_emails:
+            self.email= None
+        self.email = email 
+
+class Modelo_produto(db.Model):
+    codigo_produto = db.Column(db.String(15),primary_key=True)
+    pais_de_origem = db.Column(db.String(15),nullable=False)
+    ingredientes = db.Column(db.String(15),nullable=False)
+    caminho_foto = db.Column(db.String, nullable=True)
+    descricao = db.Column(db.String(120), nullable=False)
+    nome_do_prato = db.Column(db.String(35),unique=True , nullable=False)
+    criador = db.Column(db.String(15))
+    def gerar_codigoproduto(self):
+        self.codigo_produto=""
+        for i in range(15):
+            codificador = str(choice(["A","B","C","D","E","F","G","H","I","J","K","L","M","N"
+                                    ,"O","P","Q","R","S","T","U","V","W","X","Y","Z"])) 
+            valor = randint(0,10)
+            codigo = valor * (dicionario[codificador])
+            self.codigo_produto += codificador + str(codigo) 
+
+
+
+
+dicionario={ "A": 1,
+            "B":2,
+            "C":3,
+            "D":4,
+            "E":5,
+            "F":6,
+            "G":7,
+            "H":8,
+            "I":9,
+            "J":10,
+            "K":11,
+            "L":12,
+            "M":13,
+            "N":14,
+            "O":15,
+            "P":16,
+            "Q":17,
+            "R":18,
+            "S":19,
+            "T":20,
+            "U":21,
+            "V":22,
+            "W":23,
+            "X":24,
+            "Y":25,
+            "Z":26
+}
+
+

@@ -1,0 +1,139 @@
+{% extends "home"".html"%}
+{% block main%}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h1 style="text-align: center;">Cadastro</h1>
+    <form method="POST" action="/cadastrar" enctype="multipart/form-data" >
+      {{form.csrf_token}}
+      <h5 style="margin-left: 40%;">{{form.usuario.label}}
+      {{form.usuario}}<br>
+      {%for error in form.usuario.errors%}
+      <span style="color: #ff0000">[{{error}}]---</span> 
+      {%endfor%}
+      <br>
+      </h5>
+    <h5 style="margin-left: 40%;">{{form.sexo.label}}
+        {{form.sexo}}<br>
+        {%for error in form.sexo.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+    </h5>
+      <h5 style="margin-left: 40%;">{{form.cpf.label}}
+        {{form.cpf}}<br>
+        {%for error in form.cpf.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>
+      {% if len_lista == 2 %}
+      {% if mensagem[1] == " CPF já existente" %}
+      <h3 style="margin-left: 40%;">{{mensagem[1]}}</h3>
+      {% endif %}
+      {% else %}
+      {% if mensagem[0] == " CPF já existente"  %}
+      <h3 style="margin-left: 40%;">{{mensagem[0]}}</h3>
+      {% endif %}
+      {% endif %}
+      <h5 style="margin-left: 40%;">{{form.cidade.label}}
+        {{form.cidade}}<br>
+        {%for error in form.cidade.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>
+      <h5 style="margin-left: 40%;">{{form.estado.label}}
+        {{form.estado}}<br>
+        {%for error in form.estado.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>
+      <h5 style="margin-left: 40%;">{{form.bairro.label}}
+        {{form.bairro}}<br>
+        {%for error in form.bairro.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>
+      <h5 style="margin-left: 40%;">
+        {{form.senha.label}}
+        {{form.senha}}<br>
+        {%for error in form.senha.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}<br>
+      </h5>
+      <h5 style="margin-left: 40%;">
+          {{form.senha_check.label}}
+          {{form.senha_check}}<br>
+          {%for error in form.senha.errors%}
+          <span style="color: red">[{{error}}]---</span> 
+          {%endfor%}<br>
+      </h5>
+      <h5 style="margin-left: 40%;">{{form.cep.label}}
+        {{form.cep}}<br>
+        {%for error in form.cep.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>
+      <h5 style="margin-left: 40%;">{{form.numero_imovel.label}}
+        {{form.numero_imovel}}<br>
+        {%for error in form.numero_imovel.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>
+      <h5 style="margin-left: 40%;">{{form.rua.label}}
+        {{form.rua}}<br>
+        {%for error in form.rua.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>
+
+      <h5 style="margin-left: 40%;">{{form.data_nacimento.label}}
+        {{form.data_nacimento}}<br>
+        {%for error in form.data_nacimento.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>
+      <h5 style="margin-left: 40%;">{{form.email.label}}
+        {{form.email}}<br>
+        {%for error in form.email.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5> 
+      {% if len_lista == 2 %}
+      {% if mensagem[0] == " Email já existente" %}
+      <h3 style="margin-left: 40%;">{{mensagem[0]}}</h3>
+      {% endif %}      
+      {% else %}
+      {% if mensagem[0] == " Email já existente" %}
+      <h3 style="margin-left: 40%;">{{mensagem[0]}}</h3>
+      {% endif %}
+      {% endif %}
+      <h5 style="margin-left: 40%;">{{form.foto.label}}
+        {{form.foto}}<br>
+        {%for error in form.foto.errors%}
+        <span style="color: red">[{{error}}]---</span> 
+        {%endfor%}
+        <br>
+      </h5>     
+    <p style="margin-left: 5%;">
+      {{form.submit}}
+    </p>
+    </form>
+  {%endblock%}
