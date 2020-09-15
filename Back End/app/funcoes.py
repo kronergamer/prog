@@ -1,11 +1,11 @@
-from app.banco_de_dados import Modelo_produto , Modelo_user
+from app.banco_de_dados import Modelo_produto 
 from app import db
-def carregar_usuarios(usuario,current_user):
-    if usuario is None:
-        usuarios = Modelo_user.query.all()
-        return usuarios
-    usuario= Modelo_user.quary.filter_by(cpf=current_user.cpf)
-    return usuario
+# def carregar_usuarios(usuario,current_user):
+#     if usuario is None:
+#         usuarios = Modelo_user.query.all()
+#         return usuarios
+#     usuario= Modelo_user.quary.filter_by(cpf=current_user.cpf)
+#     return usuario
 def carregar_comidas(genero=None):
     comidas = Modelo_produto.query.all()
     if comidas is None:

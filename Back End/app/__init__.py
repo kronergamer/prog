@@ -3,6 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_login import LoginManager
+from flask_cors import CORS
 from app.config import Config
 
 
@@ -14,7 +15,7 @@ login_manager.init_app(app)
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)
-
+CORS(app)
 from app.banco_de_dados import db
 from app import routes
 
