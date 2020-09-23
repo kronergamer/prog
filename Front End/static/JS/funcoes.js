@@ -42,9 +42,9 @@ $(function() { // quando o documento estiver pronto/carregado
                 lin = '<div class="card">' + 
                 '<div class="card-body">'+'<h3 class ="card-title">' + comidas[i].nome_do_prato + '</h3>' + 
                 '<p>' + comidas[i].descricao + '</p>' + 
-                '<p>' + comidas[i].ingredintes + '</p>' +
+                '<p>' + comidas[i].ingredientes + '</p>' +
                  '</div>'  + '</div>';
-                $('#corpoTabelaUsers').append(lin);
+                $('#comidaNaMesa').append(lin);
             }
         }
     }
@@ -164,4 +164,5 @@ $(function() { // quando o documento estiver pronto/carregado
 
     // a função abaixo é executada quando a página abre
     mostrar_conteudo("conteudoInicial");
+    exibir_comidas();
 });
