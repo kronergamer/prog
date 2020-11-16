@@ -18,11 +18,12 @@
                   <div class="navbar-nav mr-auto">   
                     <a class="nav-item nav-link" href="#" id="linkInicio">HOME <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="#" id="linkVerUsuarios">Listar</a>
-                    <div class="nav-item dropdown">
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modalIncluirComida">Cadastrar Comida</a>
+                    <div class="nav-item dropdown" id = "usuariofuncoes">
                       <a class="nav-link dropdown-toggle" href=" " id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{url_for('static', filename=current_user.caminho_foto)}}" height="32" width="32"></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <a class="dropdown-item" href="cadastrar">Inscreva-se</a>
-                          <a class="dropdown-item" href="logar">Login</a>
+                          <a class="dropdown-item" data-toggle="modal" data-target="#modalIncluirUsuario">Inscreva-se</a>
+                          <a class="dropdown-item" data-toggle="modal" data-target="#modalLogarUsuario">Login</a>
                         </div>
                       </div>
                     </div>
@@ -37,12 +38,12 @@
 
               </div>
           </div>
-        <div class="modal fade" id="modalIncluirComida" tabindex="-1" role="dialog"
+        <div class="modal fade" id="modalDeletarComida" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Incluir pessoa</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Deletar Comida</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -50,12 +51,32 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
+                                    <label for="campoNome">Nome Do Prato</label>
+                                    <input type="text" class="form-control" id="campoTitulo">
+                                </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="btDeletarComida" type="button" class="btn btn-primary">Deletar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalIncluirComida" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Incluir Comida</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
                                     <label for="campoNomeDoPrato">Nome Do Prato</label>
                                     <input type="text" class="form-control" id="campoNomeDoPrato">
-                                </div>
-                                <div class="form-group">
-                                    <label for="campoCodigoProduto">Codigo Produto</label>
-                                    <input type="text" class="form-control" id="campoCodigoProduto">
                                 </div>
                                 <div class="form-group">
                                     <label for="campoPaisDeOrigem">Pais De Origem</label>
@@ -67,7 +88,7 @@
                                 </div>    
                                 <div class="form-group">
                                   <label for="campoCaminhoFoto">Caminho Foto</label>
-                                  <input type="text" class="form-control" id="campoCaminhoFoto">
+                                  <input type="file" class="form-control" id="campoCaminhoFoto">
                                 </div>          
                                 <div class="form-group">
                                   <label for="campoDescricao">Descrição do Prato</label>
@@ -78,7 +99,107 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button id="btIncluirComida" type="button" class="btn btn-primary">Incluir</button>
+                            <button id="btIncluirUsuario" type="button" class="btn btn-primary">Incluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalIncluirUsuario" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="UsuarioModalLabel">Incluir Usuario</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                  <label for="campoCaminhoFoto">Caminho Foto</label>
+                                  <input type="file" class="form-control" id="campoCaminhoFoto">
+                                </div>
+                                <div class="form-group">
+                                    <label for="campoNomeDoUsuario">Nome Do Usuario</label>
+                                    <input type="text" class="form-control" id="campoNomeDoUsuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="campoCPF">CPF</label>
+                                    <input type="text" class="form-control" id="campoCPF">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoCidade">Cidade</label>
+                                  <input type="text" class="form-control" id="campoCidade">
+                                </div>    
+                                <div class="form-group">
+                                  <label for="campoEstado">Estado</label>
+                                  <input type="text" class="form-control" id="campoEstado">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoCEP">CEP</label>
+                                  <input type="text" class="form-control" id="campoCEP">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoRua">Rua</label>
+                                  <input type="text" class="form-control" id="campoRua">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoNumeroImovel">Numero Imovel</label>
+                                  <input type="text" class="form-control" id="campoNumeroImovel">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoDataNacimento">Data De Nacimento</label>
+                                  <input type="data" class="form-control" id="campoDataNacimento">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoEmail">Email</label>
+                                  <input type="email" class="form-control" id="campoEmail">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoSenha">Senha</label>
+                                  <input type="password" class="form-control" id="campoSenha">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoSexo">Sexo</label>
+                                  <input type="text" class="form-control" id="campoSexo">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="btIncluirUsuario" type="button" class="btn btn-primary">Incluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalLogarUsuario" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Logar Usuario</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="campoNomeUsuario">Nome Do Usuario</label>
+                                    <input type="text" class="form-control" id="campoNomeUsuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="campoSenha">Senha</label>
+                                    <input type="password" class="form-control" id="campoSenha">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="btLogarUsuario" type="button" class="btn btn-primary">Logar</button>
                         </div>
                     </div>
                 </div>

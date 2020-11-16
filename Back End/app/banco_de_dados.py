@@ -4,68 +4,70 @@ from flask_login import UserMixin
 from random import randint , choice 
 
 
-# class Modelo_user(db.Model,UserMixin):
-#     usuario = db.Column(db.String(15),unique=True , nullable=False)
-#     cpf= db.Column(db.String(15),primary_key=True)    
-#     cidade = db.Column(db.String(15))
-#     estado = db.Column(db.String(15))
-#     cep = db.Column(db.String(15))  
-#     rua = db.Column(db.String(45))
-#     numero_imovel = db.Column(db.String(15))
-#     data_de_nacimento = db.Column(db.String(15),nullable=False)    
-#     email = db.Column(db.String(120), unique=True, nullable=False) 
-#     senha =db.Column(db.String(15),unique=True , nullable=False)
-#     sexo = db.Column(db.String(2), unique=False, nullable=False)
+class Modelo_user(db.Model,UserMixin):
+    usuario = db.Column(db.String(15),unique=True , nullable=False)
+    cpf = db.Column(db.String(15),primary_key=True)    
+    cidade = db.Column(db.String(15))
+    estado = db.Column(db.String(15))
+    caminho_foto = db.Column(db.String, nullable=True)
+    cep = db.Column(db.String(15))  
+    rua = db.Column(db.String(45))
+    numero_imovel = db.Column(db.String(15))
+    data_de_nacimento = db.Column(db.String(15),nullable=False)    
+    email = db.Column(db.String(120), unique=True, nullable=False) 
+    senha =db.Column(db.String(15) , nullable=False)
+    sexo = db.Column(db.String(2), unique=False, nullable=False)
 
-#     def get_id(self):
-#         return self.cpf
+    def get_id(self):
+        return self.cpf
 
-#     def check_senha(self, password):
-#         return check_password_hash(self.senha, password)
+    def check_senha(self, password):
+        print(self.senha ,password,self.senha==password)
+        return self.senha== password
 
-#     def __repr__(self):
-#         return 'Usuario com cpf {}'.format(self.usuario) 
+    def __repr__(self):
+        return 'Usuario com cpf {}'.format(self.usuario) 
 
-#     def set_administrador(self,valor): 
-#         self.is_administrador = valor
-#     def set_cpf(self,cpf):
-#         lista_cpfs=[]
-#         usuarios = Modelo_user.query.all()
-#         for usuario in usuarios:
-#             lista_cpfs.append(usuario[1])
-#         if cpf in lista_cpfs:
-#             self.cpf= None
-#         self.cpf = cpf 
-#     def set_email(self,email):
-#         lista_emails=[]
-#         usuarios = Modelo_user.query.all()
-#         for usuario in usuarios:
-#             lista_emails.append(usuario[8])
-#         if email in lista_emails:
-#             self.email= None
-#         self.email = email 
-#     def json(self):
-#         return{
-#         "usuario" : self.usuario, 
-#         "cpf" :  self.cpf,   
-#         "cidade" : self.cidade, 
-#         "estado" : self.estado,
-#         "cep" : self.cep,  
-#         "rua" : self.rua ,
-#         "numero_imovel" : self.numero_imovel, 
-#         "data_de_nacimento" : self.data_de_nacimento,     
-#         "email" : self.email,  
-#         "senha" : self.senha,
-#         "sexo" : self.sexo, 
-#         }
+    def set_administrador(self,valor): 
+        self.is_administrador = valor
+    def set_cpf(self,cpf):
+        lista_cpfs=[]
+        usuarios = Modelo_user.query.all()
+        for usuario in usuarios:
+            lista_cpfs.append(usuario[1])
+        if cpf in lista_cpfs:
+            self.cpf= None
+        self.cpf = cpf 
+    def set_email(self,email):
+        lista_emails=[]
+        usuarios = Modelo_user.query.all()
+        for usuario in usuarios:
+            lista_emails.append(usuario[8])
+        if email in lista_emails:
+            self.email= None
+        self.email = email 
+    def json(self):
+        return{
+        "usuario" : self.usuario, 
+        "cpf" :  self.cpf,   
+        "cidade" : self.cidade, 
+        "estado" : self.estado,
+        "cep" : self.cep,  
+        "rua" : self.rua ,
+        "numero_imovel" : self.numero_imovel, 
+        "data_de_nacimento" : self.data_de_nacimento,     
+        "email" : self.email,  
+        "senha" : self.senha,
+        "sexo" : self.sexo, 
+        }
 
 class Modelo_produto(db.Model):
-    codigo_produto = db.Column(db.String(15),primary_key=True)
     pais_de_origem = db.Column(db.String(15),nullable=False)
     ingredientes = db.Column(db.String(15),nullable=False)
-    caminho_foto = db.Column(db.String, nullable=True)
+    caminho_foto = db.Column(db.String(20), nullable=True)
     descricao = db.Column(db.String(120), nullable=False)
     nome_do_prato = db.Column(db.String(35),unique=True , nullable=False)
+    codigo_produto = db.Column(db.String(15),primary_key=True)
     
     def gerar_codigoproduto(self):
         self.codigo_produto=""
@@ -83,6 +85,26 @@ class Modelo_produto(db.Model):
         "caminho_foto" : self.caminho_foto,
         "descricao" : self.descricao,
         "nome_do_prato" : self.nome_do_prato,
+
+
+        }
+class Modelo_pais(db.Model):
+    nome_do_pais = db.Column(db.String(35),unique=True , nullable=False)
+    codigo_pais = db.Column(db.String(15), primary_key=True)
+    caminho_foto = db.Column(db.String(20), nullable=True)
+    def gerar_codigoproduto(self):
+        self.codigo_produto=""
+        for i in range(15):
+            codificador = str(choice(["A","B","C","D","E","F","G","H","I","J","K","L","M","N"
+                                    ,"O","P","Q","R","S","T","U","V","W","X","Y","Z"])) 
+            valor = randint(0,10)
+            codigo = valor * (dicionario[codificador])
+            self.codigo_produto += codificador + str(codigo) 
+    def json(self):
+        return {
+        "codigo_pais" : self.codigo_pais,
+        "caminho_foto" : self.caminho_foto,
+        "nome_do_pais" : self.nome_do_pais,
 
 
         }
