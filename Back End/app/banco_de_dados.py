@@ -5,11 +5,12 @@ from random import randint , choice
 
 
 class Modelo_user(db.Model,UserMixin):
+    # av6
     usuario = db.Column(db.String(15),unique=True , nullable=False)
     cpf = db.Column(db.String(15),primary_key=True)    
     cidade = db.Column(db.String(15))
     estado = db.Column(db.String(15))
-    caminho_foto = db.Column(db.String, nullable=True)
+    caminho_foto = db.Column(db.String(20), nullable=True)
     cep = db.Column(db.String(15))  
     rua = db.Column(db.String(45))
     numero_imovel = db.Column(db.String(15))
@@ -62,6 +63,7 @@ class Modelo_user(db.Model,UserMixin):
         }
 
 class Modelo_produto(db.Model):
+    # av1
     pais_de_origem = db.Column(db.String(15),nullable=False)
     ingredientes = db.Column(db.String(15),nullable=False)
     caminho_foto = db.Column(db.String(20), nullable=True)
@@ -89,10 +91,11 @@ class Modelo_produto(db.Model):
 
         }
 class Modelo_pais(db.Model):
+    # av6
     nome_do_pais = db.Column(db.String(35),unique=True , nullable=False)
     codigo_pais = db.Column(db.String(15), primary_key=True)
     caminho_foto = db.Column(db.String(20), nullable=True)
-    def gerar_codigoproduto(self):
+    def gerar_codigo(self):
         self.codigo_produto=""
         for i in range(15):
             codificador = str(choice(["A","B","C","D","E","F","G","H","I","J","K","L","M","N"
@@ -108,6 +111,22 @@ class Modelo_pais(db.Model):
 
 
         }
+def testar_banco():
+    # av6
+    pais = Modelo_pais("")
+    comida = Modelo_produto("")
+    pais.caminho_foto = "..\Front End\static\images\Brasil.jpg"
+    pais.codigo_pais = "00001"
+    pais.nome_do_pais = "Brasil"
+    comida.caminho_foto = ""
+    comida.codigo_produto = "0001"
+    comida.nome_do_prato = "Feijão com Arroz"
+    comida.descricao = "Feijão com arroz"
+    comida.pais_de_origem = "00001"
+    comida.ingredientes = "Feijão e arroz"
+    db.session.add(pais)
+    db.session.add(comida)
+    db.session.commit()
 
 
 dicionario={ "A": 1,

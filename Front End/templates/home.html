@@ -18,7 +18,11 @@
                   <div class="navbar-nav mr-auto">   
                     <a class="nav-item nav-link" href="#" id="linkInicio">HOME <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="#" id="linkVerUsuarios">Listar</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modalDeletarUsuario">Deletar Usuario</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modalDeletarPais">Deletar Pais</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modalDeletarComida">Deletar Comida</a>
                     <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modalIncluirComida">Cadastrar Comida</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modalIncluirPais">Cadastrar Pais</a>
                     <div class="nav-item dropdown" id = "usuariofuncoes">
                       <a class="nav-link dropdown-toggle" href=" " id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{url_for('static', filename=current_user.caminho_foto)}}" height="32" width="32"></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -38,6 +42,54 @@
 
               </div>
           </div>
+          <div class="modal fade" id="modalDeletarUsuario" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Deletar Usuario</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="campoCPFDUsuario">CPF Do Usuario</label>
+                                    <input type="text" class="form-control" id="campoCPFDUsuario">
+                                </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="btDeletarUsuario" type="button" class="btn btn-primary">Deletar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <div class="modal fade" id="modalDeletarPais" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Deletar Pais</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="campoNomeDPais">Nome Do Pais</label>
+                                    <input type="text" class="form-control" id="campoNomeDPais">
+                                </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="btDeletarPais" type="button" class="btn btn-primary">Deletar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="modalDeletarComida" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -51,8 +103,8 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="campoNome">Nome Do Prato</label>
-                                    <input type="text" class="form-control" id="campoTitulo">
+                                    <label for="campoNomeDPrato">Nome Do Prato</label>
+                                    <input type="text" class="form-control" id="campoNomeDPrato">
                                 </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -62,6 +114,35 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modalIncluirPais" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Incluir Pais</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="campoPais">Pais</label>
+                                    <input type="text" class="form-control" id="campoPais">
+                                </div>
+                                <div class="form-group">
+                                  <label for="campoCaminhoFoto">Caminho Foto</label>
+                                  <input type="file" class="form-control" id="campoCaminhoFoto">
+                                </div>          
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="btIncluirUsuario" type="button" class="btn btn-primary">Incluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="modal fade" id="modalIncluirComida" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -191,8 +272,8 @@
                                     <input type="text" class="form-control" id="campoNomeUsuario">
                                 </div>
                                 <div class="form-group">
-                                    <label for="campoSenha">Senha</label>
-                                    <input type="password" class="form-control" id="campoSenha">
+                                    <label for="campoLogSenha">Senha</label>
+                                    <input type="password" class="form-control" id="campoLogSenha">
                                 </div>
                             </form>
                         </div>

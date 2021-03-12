@@ -1,33 +1,29 @@
 $(function() { // quando o documento estiver pronto/carregado
-    const usuario_corrent = { nome : "nome", senha : "senha", cpf : "cpf", cep : "cep", cidade : "cidade", estado : "estado", rua : "rua",
-data_de_nacimento : "data_de_nacimento", numero_imovel : "numero_imovel", email : "email", sexo : "sexo", carteira : "carteira", 
-caminho_foto : "caminho_foto", carrinho : "carrinho", administrador : "administrador", preferencia: "preferencia", jogos : "jogos"};
-    const pais = { codigos: " "};
     // função para exibir pessoas na tabela
-    // function exibir_usuarios() {
-    //     $.ajax({
-    //         url: 'http://localhost:5000/ver_usuario',
-    //         method: 'GET',
-    //         dataType: 'json', 
-    //         success: montar, 
-    //         error: function() {
-    //             alert("erro ao ler dados, verifique o backend");
-    //         }
-    //     });
+    function exibir_usuarios() {
+        $.ajax({
+            url: 'http://localhost:5000/ver_usuario',
+            method: 'GET',
+            dataType: 'json', 
+            success: montar, 
+            error: function() {
+                alert("erro ao ler dados, verifique o backend");
+            }
+        });
     
-    //     function montar (usuarios) {
-    //         $('#corpoTabelaUsesr').empty();
-    //         mostrar_conteudo("tabelaUsers");       
-    //         for (var i in usuarios) { 
-    //             lin = '<tr>' + 
-    //             '<td>' + pessoas[i].nome + '</td>' + 
-    //             '<td>' + pessoas[i].email + '</td>' + 
-    //             '<td>' + pessoas[i].telefone + '</td>' + 
-    //             '</tr>';
-    //             $('#corpoTabelaUsers').append(lin);
-    //         }
-    //     }
-    // }
+        function montar (usuarios) {
+            $('#corpoTabelaUsesr').empty();
+            mostrar_conteudo("tabelaUsers");       
+            for (var i in usuarios) { 
+                lin = '<tr>' + 
+                '<td>' + pessoas[i].nome + '</td>' + 
+                '<td>' + pessoas[i].email + '</td>' + 
+                '<td>' + pessoas[i].telefone + '</td>' + 
+                '</tr>';
+                $('#corpoTabelaUsers').append(lin);
+            }
+        }
+    }
     function exibir_comidas() {
         $.ajax({
             url: 'http://localhost:5000/comidas',
@@ -38,11 +34,11 @@ caminho_foto : "caminho_foto", carrinho : "carrinho", administrador : "administr
             alert("erro ao ler dados, verifique o backend");
             }
         });
-        function mostrar_comidas (comidas) {
+        function mostrar_comidas (comidas,paises) {
             $('#comidaNaMesa').empty();
             mostrar_conteudo("conteudoInicial");
-            if (pais.codigos == ' '){
-               (pais.codigos = comida[0].pais_de_origem.codigo_pais)
+            if (paises.codigos == ' '){
+               (paises.codigos = comida[0].pais_de_origem.codigo_pais)
             }
             for (var u in pais.codigos.split('/')) { 
                 lin = '<div class="card-group" href="#" id =' + u + '></div>' 
@@ -74,9 +70,9 @@ caminho_foto : "caminho_foto", carrinho : "carrinho", administrador : "administr
     };
 
     // código para mapear o click do link Listar
-    // $(document).on("click", "#linkVerUsuario", function() {
-    //     exibir_usuarios();
-    // });
+    $(document).on("click", "#linkVerUsuario", function() {
+        exibir_usuarios();
+    });
     
     // código para mapear click do link Inicio
     $(document).on("click", "#linkInicio", function() {
@@ -108,9 +104,87 @@ caminho_foto : "caminho_foto", carrinho : "carrinho", administrador : "administr
             alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
         }
     });
+    $(document).on("click", "#btDeletarUsuario", function() {
+        cpf = $("#campoCPFDUsuario").val();
+        var dados = JSON.stringify({cpf : cpf});
+        $.ajax({
+            url: 'http://localhost:5000/deletar_Usuario',
+            type: 'POST',
+            dataType: 'json', // os dados são recebidos no formato json
+            contentType: 'application/json', // tipo dos dados enviados
+            data: dados, // estes são os dados enviados
+            success: usuarioDeletado, // chama a função listar para processar o resultado
+            error: erroAoExcluir
+        });
+        function usuarioDeletado (retorno) {
+            if (retorno.resultado == "ok") { 
+                // informar resultado de sucesso
+                alert("Usuario Deletado com sucesso!");
+            } else {
+                // informar mensagem de erro
+                alert(retorno.resultado + ":" + retorno.detalhes);
+            }            
+        }
+        function erroAoExcluir (retorno) {
+            // informar mensagem de erro
+            alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+        }
+    });
+    $(document).on("click", "#btDeletarPais", function() {
+        nome_do_pais = $("#campoNomeDPais").val();
+        var dados = JSON.stringify({nome_do_pais : nome_do_pais});
+        $.ajax({
+            url: 'http://localhost:5000/deletar_pais',
+            type: 'POST',
+            dataType: 'json', // os dados são recebidos no formato json
+            contentType: 'application/json', // tipo dos dados enviados
+            data: dados, // estes são os dados enviados
+            success: paisDeletado, // chama a função listar para processar o resultado
+            error: erroAoExcluir
+        });
+        function paisDeletado (retorno) {
+            if (retorno.resultado == "ok") { 
+                // informar resultado de sucesso
+                alert("pais Deletado com sucesso!");
+            } else {
+                // informar mensagem de erro
+                alert(retorno.resultado + ":" + retorno.detalhes);
+            }            
+        }
+        function erroAoExcluir (retorno) {
+            // informar mensagem de erro
+            alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+        }
+    });
+    $(document).on("click", "#btDeletarComida", function() {
+        nome_do_prato = $("#campoNome").val();
+        var dados = JSON.stringify({nome_do_prato : nome_do_prato});
+        $.ajax({
+            url: 'http://localhost:5000/deletar_produto',
+            type: 'POST',
+            dataType: 'json', // os dados são recebidos no formato json
+            contentType: 'application/json', // tipo dos dados enviados
+            data: dados, // estes são os dados enviados
+            success: comidaDeletada, // chama a função listar para processar o resultado
+            error: erroAoExcluir
+        });
+        function comidaDeletada (retorno) {
+            if (retorno.resultado == "ok") { 
+                // informar resultado de sucesso
+                alert("Comida Deletado com sucesso!");
+            } else {
+                // informar mensagem de erro
+                alert(retorno.resultado + ":" + retorno.detalhes);
+            }            
+        }
+        function erroAoExcluir (retorno) {
+            // informar mensagem de erro
+            alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+        }
+    });
     $(document).on("click", "#btLogarUsuario", function() {
         nome = $("#campoNomeUsuario").val();
-        senha = $("#campoSenha").val();
+        senha = $("#campoLogSenha").val();
         var dados = JSON.stringify({ nome: nome, senha: senha});
             $.ajax({
             url: 'http://127.0.0.1:5000/logar',
@@ -124,27 +198,11 @@ caminho_foto : "caminho_foto", carrinho : "carrinho", administrador : "administr
         function colocarUsuarioCorrente (user_json) {
             $('#usuariofuncoes').empty();
             mostrar_conteudo("conteudoInicial");       
-            usuario_corrent.nome = user_json.usuario;
-            usuario_corrent.senha = user_json.senha;
-            usuario_corrent.cep = user_json.cep;
-            usuario_corrent.numero_imovel = user_json.numero_imovel;
-            usuario_corrent.rua = user_json.rua;
-            usuario_corrent.cidade = user_json.cidade;
-            usuario_corrent.estado = user_json.estado;
-            usuario_corrent.caminho_foto = user_json.caminho_foto;
-            usuario_corrent.data_de_nacimento = user_json.data_de_nacimento;
-            usuario_corrent.sexo = user_json.sexo;
-            usuario_corrent.carteira = user_json.carteira;
-            usuario_corrent.carrinho = user_json.carrinho;
-            usuario_corrent.email = user_json.email;
-            usuario_corrent.administrador = user_json.administrador;
-            usuario_corrent.preferencia = user_json.preferencia;
-            usuario_corrent.jogos = user_json.jogos;
                 lin =  
-                '<a class="nav-link dropdown-toggle" href=" " id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src='+ usuario_corrent.caminho_foto +'height="32" width="32"></a>' + 
+                '<a class="nav-link dropdown-toggle" href=" " id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src='+ user_json.caminho_foto +'height="32" width="32"></a>' + 
                 '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">'+
-                '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalIncluirUsuario">' + usuario_corrent.nome + '</a>' + 
-                '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalLogarUsuario">' + "Sair" + '</a>' ;
+                '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalIncluirUsuario">' + user_json.nome + '</a>' + 
+                '<a class="dropdown-item" href="#" id "Sair">' + "Sair" + '</a>' ;
                 $('#usuariofuncoes').append(lin);
         }
         function erroAoIncluir (retorno) {
@@ -182,6 +240,39 @@ caminho_foto : "caminho_foto", carrinho : "carrinho", administrador : "administr
                 $("#campoCaminhofoto").val("");
                 $("#campoDescricao").val("");
                 $("#campoNomeDoPrato").val("");
+            } else {
+                // informar mensagem de erro
+                alert(retorno.resultado + ":" + retorno.detalhes);
+            }            
+        }
+        function erroAoIncluir (retorno) {
+            // informar mensagem de erro
+            alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+        }
+    });
+    $(document).on("click", "#btIncluirPais", function() {
+        //pegar dados da tela
+        pais = $("#campoPais").val();
+        caminho_foto = $("#campoCaminhoFoto").val();
+        // preparar dados no formato json
+        var dados = JSON.stringify({  pais : pais, caminho_foto : caminho_foto, nome_do_prato: nome_do_prato});
+        // fazer requisição para o back-end
+        $.ajax({
+            url: 'http://localhost:5000/cadastro_pais',
+            type: 'POST',
+            dataType: 'json', // os dados são recebidos no formato json
+            contentType: 'application/json', // tipo dos dados enviados
+            data: dados, // estes são os dados enviados
+            success: paisIncluido, // chama a função listar para processar o resultado
+            error: erroAoIncluir
+        });
+        function paisIncluido (retorno) {
+            if (retorno.resultado == "ok") { // a operação deu certo?
+                // informar resultado de sucesso
+                alert("Comida incluída com sucesso!");
+                // limpar os campos
+                $("#campoPais").val("");
+                $("#campoCaminhofoto").val("");
             } else {
                 // informar mensagem de erro
                 alert(retorno.resultado + ":" + retorno.detalhes);

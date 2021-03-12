@@ -2,7 +2,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
-from flask_login import LoginManager
 from flask_cors import CORS
 from app.config import Config
 
@@ -10,9 +9,6 @@ from app.config import Config
 
 app = Flask (__name__,static_url_path='/static')
 mail = Mail(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 CORS(app)

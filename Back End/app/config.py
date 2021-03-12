@@ -5,4 +5,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     MAIL_USERNAME = "kronergamer@gmail.com"
     MAIL_PASSWORD = "kroner9paulo1475963"
-    UPLOAD_FOLDER = 'C:/Users/Paulo/Desktop/Codigos/Site/app/static/images/perfil/'
+    UPLOAD_FOLDER = 'MeuSite\Front End\static\images'
